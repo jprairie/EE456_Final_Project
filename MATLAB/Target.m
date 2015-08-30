@@ -36,7 +36,7 @@ classdef Target < handle
                 case 1
                     % paper size is 8.5 x 11
                     obj.paper_size_inches = [8.5 11];  % [x y]
-                    obj.poa_dia_inches = 1.0; % 1 inch bullseye
+                    obj.poa_dia_inches = 0.5; % 1/2 inch center bullseye
                     
                     
                     
