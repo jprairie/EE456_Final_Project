@@ -230,14 +230,9 @@ classdef Target < handle
                 obj.gry_image = imrotate(obj.gry_image,theta);
                 obj.bw_image = imrotate(obj.bw_image,theta);
                 disp('Corrected rotation in images...');
-            else
-                disp('No rotation correction needed...');
-            end   
-        end
-        
-        
-        
-        
+            end
+                   
+        end    
         
     end
     
