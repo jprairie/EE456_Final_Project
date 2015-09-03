@@ -1,10 +1,18 @@
 close all;
 home;
 
+%% define a "Bullet"
+bullet_dia = 0.224;
+Bullet = Bullet(bullet_dia);
+
+%% define a "Target"
 image_name = '_sim_bullet_holes_rotated.jpg';
 %image_name = 'test1.jpg';
 target_style_num = 1;
-Target_1 = Target(image_name,target_style_num);
+Target = Target(image_name,target_style_num);
+
+%% define a "Group"
+Group = Group(Target,Bullet);
 
 % 
 % %% plot "+" at centers of bullet holes and bullseye

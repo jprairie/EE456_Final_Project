@@ -1887,7 +1887,7 @@ Date: _____________ Load: _______________________}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-08-30 19:46:05 +0000</string>
+	<string>2015-09-03 20:57:54 +0000</string>
 	<key>Modifier</key>
 	<string>Jason Prairie</string>
 	<key>NotesVisible</key>
@@ -1967,8 +1967,10 @@ Date: _____________ Load: _______________________}</string>
 				<string>Canvas 1</string>
 			</dict>
 		</array>
+		<key>FitInWindow</key>
+		<true/>
 		<key>Frame</key>
-		<string>{{457, 60}, {1408, 1293}}</string>
+		<string>{{95, 40}, {1408, 1089}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -1982,15 +1984,15 @@ Date: _____________ Load: _______________________}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{-169.99999999999997, -31}, {936.02940191911171, 837.49999119078427}}</string>
+		<string>{{-230, 0}, {1055.1603914845682, 774.99997332134444}}</string>
 		<key>Zoom</key>
-		<real>1.3600000143051147</real>
+		<real>1.2064516544342041</real>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Canvas 1</string>
-				<real>1.3600000143051147</real>
-				<real>1.3899999856948853</real>
+				<real>0.0</real>
+				<real>4.0999999046325684</real>
 			</array>
 		</array>
 	</dict>
