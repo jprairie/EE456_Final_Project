@@ -50,10 +50,30 @@ classdef Target < handle
     end
     
     methods
-        % Class Constructor
-        % rgb_image -- the filename of an image of the target
-        % style_num -- the target style number, determines target specifics
+        
+        
+        % -----------------------------------------------------------------
+        % Function TARGET (Class Constructor)
+        %
+        % Description:
+        %   This is the class constructor for the "Target" class. Upon
+        %   creating a new object of "Target" most of the class properties
+        %   will be defined as well as target POA and rectangular regions
+        %   located and defined
+        %
+        % Inputs:
+        %   rgb_image_filename - the filename or full path to the scanned
+        %       target image to load
+        %   style_num - an integer representing the target style number, a
+        %       number which is unique to the particular target. Various
+        %       class properties will be defined based on this target style
+        %       number
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function obj = Target(rgb_image_filename,style_num)
+            % assign the properties of the two inputs
             obj.image_info = imfinfo(rgb_image_filename);
             obj.style_num = style_num; 
             
@@ -63,7 +83,7 @@ classdef Target < handle
                     obj.poa_dia_inches = 0.5; % 1/2 inch center bullseye
                     obj.num_bulls = 6;
                     obj.poa_order = 1; %top left to bottom right
-                    obj.rect_size_inches = [3.5 3.25];
+                    obj.rect_size_inches = [3.5 3.25]; % Horz Vert
   
                 otherwise
                     error('Target style number unknown');         
@@ -81,21 +101,40 @@ classdef Target < handle
             obj.gry_image = rgb2gray(obj.rgb_image);
             obj.bw_image = im2bw(obj.gry_image,graythresh(obj.gry_image));
 
-            % correct any image rotation
+            % correct any image rotation if needed
             correct_image_rotation(obj);
             
             % determine the POA locations
             obj.temp_process_image = obj.bw_image;
             find_poa_centers_temp_image(obj,obj.num_bulls);
             
-            % find group borders
+            % find group borders/rectanglur regions
             obj.temp_process_image = obj.bw_image;
-            find_rect_boundaries_temp_image(obj);  
+            find_rect_boundaries_temp_image(obj);
+            
+            % TODO: determine which POA are in which rectangular region,
+            % also determine the correct ordering (region numbers) for
+            % each area
         end
 
         
         % -----------------------------------------------------------------
-        % get image dpi
+        % Function FIND_IMAGE_DPI
+        %
+        % Description:
+        %   Find the "dots per inch" (dpi) of the scanned image. This
+        %   information was stored in the property "image_info" by using
+        %   the "imfinfo" MATLAB function. For purposes of this project,
+        %   the scanning equipment will set X and Y resoultion the same and
+        %   this function will error if it is not the same. The property
+        %   "dpi" is set when the function returns
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function find_image_dpi(obj)
             % image dpi in x and y directions is listed in the image_info
             % struct as XResolution and YResolution respectively
@@ -108,12 +147,33 @@ classdef Target < handle
             
         end
         
+        
         % -----------------------------------------------------------------
-        % find_poa_centers
+        % Function FIND_POA_CENTERS
+        %
+        % Description:
+        %   Determine the center coordinates for "num_poa" bullseyes or
+        %   points of aim (POA). Uses the MATLAB function "imfindcircles"
+        %   to determine circular objects that are close to the same size
+        %   as the POA (as defined by the style_num). Uses an iterative
+        %   approach by setting the algorithm sensitivty to 90% and walking
+        %   up by 1% until the correct number of POA are found or we pass
+        %   100%. If 100% is passed, the functions errors. At the
+        %   conclusion of the function, the properties
+        %   "poa_center_location" and "poa_center_radii" have correctly
+        %   populated values.
+        %
+        % Inputs:
+        %   num_poa = number of bullseyes or poa as determined earlier by
+        %   the target style
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function find_poa_centers_temp_image(obj,num_poa)
             % use imfindcircles to determine circles that are roughly the
             % same size as our poa. Imfindcircles takes radius as input.
-            buffer = 10; % not exactly sure on poa size
+            buffer = 10; % not exactly sure on poa size (in pixels)
             limits = [floor(obj.poa_dia_pixels / 2) - buffer ...
                 floor(obj.poa_dia_pixels / 2) + buffer];
             imfindcircle_sens = 0.90;
@@ -138,8 +198,20 @@ classdef Target < handle
             obj.poa_center_radii = poa_radii; 
         end
         
+        
         % -----------------------------------------------------------------
-        % remove small objects
+        % Function REMOVE_SMALL_OBJECTS_TEMP_IMAGE
+        %
+        % Description:
+        %   Remove small objects from the "temp_process_image" that would
+        %   otherwise be noise to enhance image segmentation algorithms
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function remove_small_objects_temp_image(obj)               
             % remove small objects smaller than poa_dia_pixels (99%), will
             % remove bullet holes as well, image must be inverted for best
@@ -151,8 +223,23 @@ classdef Target < handle
                 ~bwareaopen(~obj.temp_process_image,poa_area);
         end
         
+        
         % -----------------------------------------------------------------
-        % find rectangle boundaries
+        % Function FIND_RECT_BOUNDARIES_TEMP_IMAGE
+        %
+        % Description:
+        %   Determine the rectangular regions that seperate various POA
+        %   bullesyes from one another. Makes use of the MATLAB regionprops
+        %   function to identify connected regions in the image. We then
+        %   search for regions whose area resembles the expected area of
+        %   the rectangular regions.
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function find_rect_boundaries_temp_image(obj)    
             remove_small_objects_temp_image(obj);
             
@@ -178,7 +265,23 @@ classdef Target < handle
         
         
         % -----------------------------------------------------------------
-        % correct image rotation
+        % Function CORRECT_IMAGE_ROTATION
+        %
+        % Description:
+        %   Correct for image rotation introducted during scanning of the
+        %   image. Based on the style number, detect two POA. Assuming
+        %   either x or y values should be the same, determine the rotation
+        %   angle in degrees by the mismatch of the x or y coordinate that
+        %   should have been the same. Once the rotation is determined, if
+        %   above a threshold, use the MATLAB "imrotate" function to rotate
+        %   the images back to orthogonal.
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
         function correct_image_rotation(obj)
             % assign the bw image to the temp_process image
             obj.temp_process_image = obj.bw_image;
@@ -229,7 +332,6 @@ classdef Target < handle
                 obj.rgb_image = imrotate(obj.rgb_image,theta);
                 obj.gry_image = imrotate(obj.gry_image,theta);
                 obj.bw_image = imrotate(obj.bw_image,theta);
-                disp('Corrected rotation in images...');
             end
                    
         end    
