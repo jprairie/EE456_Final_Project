@@ -1,4 +1,4 @@
-classdef Target < handle
+classdef Target_old < handle
     %TARGET Class represent a paper target
     %   Target class object contains all necessary functions to have a
     %   complete description of an OCW target.
