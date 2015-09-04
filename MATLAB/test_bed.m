@@ -16,22 +16,23 @@ Target = Target(image_name,target_style_num);
 Group = Group(Target,Bullet);
 
 imshow(Target.rgb_image);
-hold on;
-pause(3)
-for i = 1:6
-    plot(Target.approx_poa_center_locations.pixels(i,1),...
-        Target.approx_poa_center_locations.pixels(i,2),'*g');
-    rectangle('Position',Group.bounding_boxes(i,:));
-    drawnow;
-    pause(0.50);
-end
-
-for i = 1:6
-    figure;
-    imshow(imcrop(Group.Target.rgb_image,Group.bounding_boxes(i,:)));
-    drawnow;
-    pause(0.5);
-end
+% hold on;
+% pause(3)
+% for i = 1:6
+%     plot(Target.approx_poa_center_locations.pixels(i,1),...
+%         Target.approx_poa_center_locations.pixels(i,2),'*g');
+%     h = rectangle('Position',Group.bounding_boxes(i,:));
+%     h.EdgeColor = 'red';
+%     drawnow;
+%     pause(0.50);
+% end
+% 
+% for i = 1:6
+%     figure;
+%     imshow(imcrop(Group.Target.rgb_image,Group.bounding_boxes(i,:)));
+%     drawnow;
+%     pause(0.5);
+% end
 
 % 
 % %% plot "+" at centers of bullet holes and bullseye

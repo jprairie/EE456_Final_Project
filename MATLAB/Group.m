@@ -6,6 +6,7 @@ classdef Group < handle
         Target;
         Bullet;
         bounding_boxes;
+        info;
     end
     
     methods
@@ -26,6 +27,14 @@ classdef Group < handle
             obj.Target = Target;
             obj.Bullet = Bullet;
             
+            % the group info will largely be stored in a struct called
+            % info, with the first layer being titled group_1, group_2, and
+            % so on up to the number of bullseyes on the target
+            for i = 1:obj.Target.num_bulls
+               f_name = ['group_' int2str(i)];
+               obj.info.(f_name) = [];
+            end
+            
             % update the bullet dia in pixels
             obj.Bullet.bullet_dia_pixels = Target.image_dpi * ...
                 obj.Bullet.bullet_dia_inches;
@@ -40,6 +49,8 @@ classdef Group < handle
             % the bounding boxes are in no particular order in the returned
             % array, sort them
             sort_bounding_boxes(obj);
+            
+            
             
             
             
