@@ -27,6 +27,7 @@ classdef Target < handle
         image_dpi;
         target_paper_size;
         approx_poa_center_locations;
+        approx_rect_area;
         poa_size;
         num_bulls;
     end
@@ -98,6 +99,9 @@ classdef Target < handle
                     obj.poa_size.inches = 0.5;
                     obj.poa_size.pixels = obj.poa_size.inches * ...
                         obj.image_dpi;
+                    obj.approx_rect_area.inches = 3.5 * 3.25;
+                    obj.approx_rect_area.pixels = ...
+                        obj.approx_rect_area.inches * obj.image_dpi^2;
                 otherwise
                     error('Target style not recognized');
             end

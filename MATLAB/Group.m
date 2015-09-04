@@ -5,6 +5,7 @@ classdef Group < handle
     properties
         Target;
         Bullet;
+        bounding_boxes;
     end
     
     methods
@@ -32,6 +33,17 @@ classdef Group < handle
             % correct any rotation that is present in the scanned images
             correct_image_rotation(obj);
             
+            % find the bounding boxes for each rectangular area
+            obj.bounding_boxes = ...
+                find_rect_boundaries(obj,obj.Target.bw_image);
+            
+            % the bounding boxes are in no particular order in the returned
+            % array, sort them
+            sort_bounding_boxes(obj);
+            
+            
+            
+            
         end
         
         
@@ -39,7 +51,7 @@ classdef Group < handle
         % Function CORRECT_IMAGE_ROTATION
         %
         % Description:
-        %   Correct for image rotation introducted during scanning of the
+        %   Correct for image rotation introduced during scanning of the
         %   image. Based on the style number, detect two POA. Assuming
         %   either x or y values should be the same, determine the rotation
         %   angle in degrees by the mismatch of the x or y coordinate that
@@ -51,9 +63,9 @@ classdef Group < handle
         %   none
         %
         % Outputs:
-        %   none
+        %   rotated -- return 1 if images were rotated, 0 if not
         % -----------------------------------------------------------------
-        function correct_image_rotation(obj)
+        function rotated = correct_image_rotation(obj)
             % assign the bw image to the temp_process image
             temp_process_image = obj.Target.bw_image;
             
@@ -69,11 +81,7 @@ classdef Group < handle
                 otherwise
                     error('Target style not recognized');
             end
-            
-            % TODO: implement remove small object with a parameter for size
-            % clean up image
-            % remove_small_objects_temp_image(obj);
-            
+                        
             % find the POA circles
             poa_centers = find_poa_centers(obj,temp_process_image,num_poa);
             
@@ -103,15 +111,18 @@ classdef Group < handle
             if abs(theta) >= theta_threshold
                 % rotate all images
                 obj.Target.rgb_image = ...
-                    imrotate(obj.Target.rgb_image,theta);
+                    imrotate(obj.Target.rgb_image,theta,'nearest','crop');
                 obj.Target.gry_image = ...
-                    imrotate(obj.Target.gry_image,theta);
-                obj.Target.bw_image = imrotate(obj.Target.bw_image,theta);
+                    imrotate(obj.Target.gry_image,theta,'nearest','crop');
+                obj.Target.bw_image = ...
+                    imrotate(obj.Target.bw_image,theta,'nearest','crop');
                 
-                % TODO: The images are now bigger than they otherwise would be
-                % need to figure otu how to shrink them
+                rotated = 1;
+                return;
             end
-                   
+            
+            rotated = 0;
+            return;           
         end
         
         
@@ -186,6 +197,93 @@ classdef Group < handle
            centers = find_round_objects(obj,input_image,dia_pix,num_poa);
         end
         
+        
+        % -----------------------------------------------------------------
+        % Function FIND_RECT_BOUNDARIES
+        %
+        % Description:
+        %   Determine the rectangular regions that seperate various POA
+        %   bullesyes from one another. Makes use of the MATLAB regionprops
+        %   function to identify connected regions in the image. We then
+        %   search for regions whose area resembles the expected area of
+        %   the rectangular regions.
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   none
+        % -----------------------------------------------------------------
+        function boundaries = find_rect_boundaries(obj,image)    
+
+            % determine the nominal rectangular area size
+            nominal_area = obj.Target.approx_rect_area.pixels;         
+            
+            % now find the region properties and trim out anything that is
+            % not the rectangle we are looking for
+            props = regionprops(image);
+            area = cat(1, props.Area);
+            bounds = cat(1, props.BoundingBox);
+            indices = find((area > (0.75 * nominal_area)) & ...
+                (area < (1.25 * nominal_area)));
+            boundaries = bounds(indices,:);            
+            
+            % check to make sure we found the right number of regions
+            if length(boundaries) ~= obj.Target.num_bulls
+                error('Could not detect rectangular regions');
+            end
+            
+        end
+        
+        
+        % -----------------------------------------------------------------
+        % Function SORT_BOUNDING_BOXES
+        %
+        % Description:
+        %   Correct for image rotation introduced during scanning of the
+        %   image. Based on the style number, detect two POA. Assuming
+        %   either x or y values should be the same, determine the rotation
+        %   angle in degrees by the mismatch of the x or y coordinate that
+        %   should have been the same. Once the rotation is determined, if
+        %   above a threshold, use the MATLAB "imrotate" function to rotate
+        %   the images back to orthogonal.
+        %
+        % Inputs:
+        %   none
+        %
+        % Outputs:
+        %   rotated -- return 1 if images were rotated, 0 if not
+        % -----------------------------------------------------------------
+        function sort_bounding_boxes(obj)
+            % the rows of obj.Target.approx_poa_center_locations are in
+            % order. For each row...
+            temp_data = zeros(size(obj.bounding_boxes));
+            for i = 1:size(obj.Target.approx_poa_center_locations.pixels,1)
+                center_x = ...
+                    obj.Target.approx_poa_center_locations.pixels(i,1);
+                center_y = ...
+                    obj.Target.approx_poa_center_locations.pixels(i,2);
+                for j = 1:size(obj.bounding_boxes,1) % number of rows
+                    % for each row in bounding boxes
+                    % determine the max/min x and y pixel values of the box
+                    bounds = obj.bounding_boxes(j,:);
+                    min_x = bounds(1);
+                    min_y = bounds(2);
+                    max_x = min_x + bounds(3);
+                    max_y = min_y + bounds(4);
+                    if ( (center_x >= min_x) && (center_x <= max_x) && ...
+                            (center_y >= min_y) && (center_y <= max_y) )
+                       % this poa center is within this bounding box
+                       temp_data(i,:) = bounds;
+                       break;
+                    end
+                end
+            end
+            
+            obj.bounding_boxes = temp_data;
+            
+            % get the approximate poa center locations one by one
+        end
         
     end
     
