@@ -1,9 +1,10 @@
-classdef Bullet
+classdef Bullet < handle
     %BULLET Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
         bullet_dia_inches;
+        bullet_dia_pixels;
     end
     
     methods

@@ -1,4 +1,4 @@
-classdef Target
+classdef Target < handle
     %TARGET Class represent a paper target
     %   Target class object contains information about the paper target
     %   itself, not information about groups or POA/POI
@@ -27,6 +27,8 @@ classdef Target
         image_dpi;
         target_paper_size;
         approx_poa_center_locations;
+        poa_size;
+        num_bulls;
     end
     
     methods
@@ -92,6 +94,10 @@ classdef Target
                     obj.approx_poa_center_locations.pixels = ...
                         obj.image_dpi .* ...
                         obj.approx_poa_center_locations.inches;
+                    obj.num_bulls = 6;
+                    obj.poa_size.inches = 0.5;
+                    obj.poa_size.pixels = obj.poa_size.inches * ...
+                        obj.image_dpi;
                 otherwise
                     error('Target style not recognized');
             end
