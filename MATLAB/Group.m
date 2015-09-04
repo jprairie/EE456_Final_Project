@@ -7,6 +7,7 @@ classdef Group < handle
         Bullet;
         bounding_boxes;
         info;
+        bullets_per_group;
     end
     
     methods
@@ -23,18 +24,11 @@ classdef Group < handle
         % Outputs:
         %   none
         % -----------------------------------------------------------------
-        function obj = Group(Target,Bullet)
+        function obj = Group(Target,Bullet,bullets_per_group)
             obj.Target = Target;
             obj.Bullet = Bullet;
-            
-            % the group info will largely be stored in a struct called
-            % info, with the first layer being titled group_1, group_2, and
-            % so on up to the number of bullseyes on the target
-            for i = 1:obj.Target.num_bulls
-               f_name = ['group_' int2str(i)];
-               obj.info.(f_name) = [];
-            end
-            
+            obj.bullets_per_group = bullets_per_group;
+                        
             % update the bullet dia in pixels
             obj.Bullet.bullet_dia_pixels = Target.image_dpi * ...
                 obj.Bullet.bullet_dia_inches;
@@ -51,7 +45,27 @@ classdef Group < handle
             sort_bounding_boxes(obj);
             
             
-            
+            % group info will be stored in a struct called info, with the
+            % first layer being titled group_1, group_2, and so on up to
+            % the number of bullseyes on the target, start populating with
+            % known values, leave unknow values empty for now
+            for i = 1:obj.Target.num_bulls
+               f_name = ['group_' int2str(i)];
+               
+               obj.info.(f_name).num_poa = 1;
+               obj.info.(f_name).bullet_hole_dia = ...
+                   obj.Bullet.bullet_dia_pixels;
+               obj.info.(f_name).poa_dia = ...
+                   obj.Target.poa_dia.pixels;
+               obj.info.(f_name).image_dpi = obj.Target.image_dpi;
+               obj.info.(f_name).rgb_image = ...
+                   imcrop(obj.Target.rgb_image,obj.bounding_boxes(i,:));
+               obj.info.(f_name).bw_image = ...
+                   imcrop(obj.Target.bw_image,obj.bounding_boxes(i,:));
+               obj.info.(f_name).poa_center = [0 0];
+               obj.info.(f_name).bullet_centers = [];
+               obj.info.(f_name).nominal_num_holes = obj.bullets_per_group;
+            end
             
             
             
@@ -204,7 +218,7 @@ classdef Group < handle
         function centers = find_poa_centers(obj,input_image,num_poa)
            % wrap functionality of find_round_objects
            % define dia_pix, this should be half the bullet_dia in pixels
-           dia_pix = obj.Target.poa_size.pixels;
+           dia_pix = obj.Target.poa_dia.pixels;
            centers = find_round_objects(obj,input_image,dia_pix,num_poa);
         end
         

@@ -28,7 +28,7 @@ classdef Target < handle
         target_paper_size;
         approx_poa_center_locations;
         approx_rect_area;
-        poa_size;
+        poa_dia;
         num_bulls;
     end
     
@@ -96,8 +96,8 @@ classdef Target < handle
                         obj.image_dpi .* ...
                         obj.approx_poa_center_locations.inches;
                     obj.num_bulls = 6;
-                    obj.poa_size.inches = 0.5;
-                    obj.poa_size.pixels = obj.poa_size.inches * ...
+                    obj.poa_dia.inches = 0.5;
+                    obj.poa_dia.pixels = obj.poa_dia.inches * ...
                         obj.image_dpi;
                     obj.approx_rect_area.inches = 3.5 * 3.25;
                     obj.approx_rect_area.pixels = ...

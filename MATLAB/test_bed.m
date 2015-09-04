@@ -13,7 +13,8 @@ target_style_num = 1;
 Target = Target(image_name,target_style_num);
 
 %% define a "Group"
-Group = Group(Target,Bullet);
+bullets_per_group = 3;
+Group = Group(Target,Bullet,bullets_per_group);
 
 imshow(Target.rgb_image);
 % hold on;
