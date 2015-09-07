@@ -314,7 +314,10 @@ classdef Group < handle
         %   detected, the function will error out, if fewer, the function
         %   will warn the user (overlapping bullets most likely). The
         %   function will return the region properties which can be used
-        %   later to process some statistics about the groups.
+        %   later to process some statistics about the groups. Much of the
+        %   image processing ideas were gained from a MATLAB tutorial here:
+        %   see http://www.mathworks.com/help/images/examples/
+        %   detecting-a-cell-using-image-segmentation.html
         %
         % Inputs:
         %   input_image - the image to process, must be an RGB image
