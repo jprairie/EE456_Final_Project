@@ -52,6 +52,80 @@
 	<key>GraphicsList</key>
 	<array>
 		<dict>
+			<key>Bounds</key>
+			<string>{{580.5, 4.5}, {9, 9}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>GridCenter</key>
+			<string>YES</string>
+			<key>ID</key>
+			<integer>432</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0</string>
+						<key>g</key>
+						<string>0</string>
+						<key>r</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{4.5, 4.5}, {9, 9}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>GridCenter</key>
+			<string>YES</string>
+			<key>ID</key>
+			<integer>430</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0</string>
+						<key>g</key>
+						<string>0</string>
+						<key>r</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
 			<key>Class</key>
 			<string>Group</string>
 			<key>Graphics</key>
@@ -1887,7 +1961,7 @@ Date: _____________ Load: _______________________}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-09-03 20:57:54 +0000</string>
+	<string>2015-09-06 02:32:32 +0000</string>
 	<key>Modifier</key>
 	<string>Jason Prairie</string>
 	<key>NotesVisible</key>
@@ -1961,38 +2035,29 @@ Date: _____________ Load: _______________________}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>ExpandedCanvases</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Canvas 1</string>
-			</dict>
-		</array>
-		<key>FitInWindow</key>
-		<true/>
+		<array/>
 		<key>Frame</key>
-		<string>{{95, 40}, {1408, 1089}}</string>
+		<string>{{80, 72}, {2128, 1335}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
 		<integer>142</integer>
 		<key>RightSidebar</key>
 		<false/>
-		<key>ShowRuler</key>
-		<true/>
 		<key>Sidebar</key>
 		<true/>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{-230, 0}, {1055.1603914845682, 774.99997332134444}}</string>
+		<string>{{-16.686520381798573, 0.31347961820142706}, {629.46707334846553, 384.32601191494962}}</string>
 		<key>Zoom</key>
-		<real>1.2064516544342041</real>
+		<real>3.190000057220459</real>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Canvas 1</string>
-				<real>0.0</real>
-				<real>4.0999999046325684</real>
+				<real>3.190000057220459</real>
+				<real>3.2799999713897705</real>
 			</array>
 		</array>
 	</dict>

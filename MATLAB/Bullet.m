@@ -1,6 +1,10 @@
 classdef Bullet < handle
-    %BULLET Summary of this class goes here
-    %   Detailed explanation goes here
+    %BULLET Class representation of a bullet
+    %   Bullet class object contains information about the bullets used
+    %   
+    %   Property descriptions:
+    %       bullet_dia_inches -- the bullet diameter in inches
+    %       bullet_dia_pixels -- the bullet diameter in pixels
     
     properties
         bullet_dia_inches;
@@ -12,11 +16,10 @@ classdef Bullet < handle
         % Function BULLET (Class Constructor)
         %
         % Description:
-        %   This is the class constructor for the "BULLET" class. Enter more
-        %   description here later.
+        %   This is the class constructor for the "BULLET" class. 
         %
         % Inputs:
-        %   input 1 -- description
+        %   bullet_dia_inches -- The nominal bullet diameter in inches
         %
         % Outputs:
         %   none
@@ -24,6 +27,10 @@ classdef Bullet < handle
         function obj = Bullet(bullet_dia_inches)
            % set the bullet_dia property
            obj.bullet_dia_inches = bullet_dia_inches;
+           % default value of 300 dpi, this will be set properlay in the
+           % class constructor for the GROUP class
+           obj.bullet_dia_pixels = 300 * bullet_dia_inches;
+           
         end
         
     end
