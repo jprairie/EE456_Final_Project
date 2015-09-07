@@ -6,6 +6,7 @@ classdef OCW_Stats < handle
         Group;
         group_names;
         delta_names;
+        data;
     end
     
     methods
@@ -30,6 +31,9 @@ classdef OCW_Stats < handle
             
             % create a cell array containing 'delta_names'
             create_delta_names(obj,obj.group_names);
+            
+            % calculate data
+            calculate_data(obj);
             
         end
         
@@ -73,6 +77,56 @@ classdef OCW_Stats < handle
             obj.delta_names = obj.delta_names';
             
         end
+        
+        
+        % -----------------------------------------------------------------
+        % Function CALCULATE_DATA
+        %
+        % Description:
+        %   
+        %
+        % Inputs:
+        %   
+        %
+        % Outputs:
+        %   
+        % -----------------------------------------------------------------
+        function calculate_data(obj)
+            % assign the POA
+            
+            
+            
+            names = obj.group_names;
+            for i = 1:size(names,1)
+                % assign the POA
+                POA = obj.Group.info.(names{i}).poa_center;
+                obj.data.(names{i}).POA = POA;
+                
+                % calculate the mean POI (centroid)
+                centroids = ...
+                    cat(1,obj.Group.info.(names{i}).bullet_group_props. ...
+                    Centroid);
+                mean_POI = sum(centroids) ./ size(centroids,1);
+                obj.data.(names{i}).mean_POI = mean_POI;
+                
+                % calculate the mean POI to POA distance
+               x1 = POA(1);
+               y1 = POA(2);           
+               x2 = mean_POI(1);
+               y2 = mean_POI(2);
+               dx = x1 - x2; % POA is reference
+               dy = -(y1 - y2); % POA is reference, in image, y is flipped
+               mag = sqrt(dx^2 + dy^2);
+               angle = atand(dy / dx);
+               obj.data.(names{i}).POA_to_POI_RECT = [dx dy];             
+               obj.data.(names{i}).POA_to_POI_MA = [mag angle]; 
+
+            end
+            
+            
+        end
+        
+        
         
     end
     
