@@ -340,10 +340,10 @@ classdef Group < handle
             % dilate it, helps ensure that unenclosed bullet regions get
             % closed, adjust dil_scale for the percent of the bullet
             % diameter to dilate by, use a horizontal and vertical
-            % line structuring element, between 0.1 and 0.2 should work
+            % line structuring element, between 0.05 and 0.15 should work
             % good in practice, this does make the bullet holes appear
             % larger at this point
-            dil_scale = 0.15;
+            dil_scale = 0.1;
             dilate_amt = ceil(dil_scale * obj.Bullet.bullet_dia_pixels);
             se90 = strel('line', dilate_amt, 90);
             se0 = strel('line', dilate_amt, 0);
