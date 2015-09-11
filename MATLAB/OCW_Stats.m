@@ -272,8 +272,8 @@ classdef OCW_Stats < handle
            title(title_str);
            xlabel('Target Width, Inches');
            ylabel('Target Height, Inches');
-           plot(center_POA(1),center_POA(2),'Or',...
-               'MarkerFaceColor',obj.orange);
+           plot(center_POA(1),center_POA(2),'O','Color',obj.blue,...
+               'MarkerFaceColor',obj.blue);
            
            % plot a circle of 1 inch
            r = 0.5;
@@ -293,7 +293,7 @@ classdef OCW_Stats < handle
                        + POA_x;
                    y = POA_y - pix2inch...
                        (obj,obj.data.(obj.group_names{i}).POA_to_POI_RECT(2));
-                   plot(x,y,'Ob','MarkerFaceColor',obj.blue);
+                   plot(x,y,'O','Color',obj.orange,'MarkerFaceColor',obj.orange);
                    text(x,y,num2str(i),'VerticalAlignment','bottom', ...
                        'HorizontalAlignment','right');
                end
