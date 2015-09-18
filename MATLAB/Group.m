@@ -87,6 +87,9 @@ classdef Group < handle
                obj.info.(f_name).rgb_image = ...
                    imcrop(obj.Target.rgb_image,obj.bounding_boxes(i,:));
                
+               obj.info.(f_name).gry_image = ...
+                   imcrop(obj.Target.gry_image,obj.bounding_boxes(i,:));
+               
                obj.info.(f_name).bw_image = ...
                    imcrop(obj.Target.bw_image,obj.bounding_boxes(i,:));
                
@@ -146,7 +149,7 @@ classdef Group < handle
             % gray threshold value, if chosen correctly, it will retain
             % black marks and reject ink. A value of 0.5 works well in
             % practice.
-            scale = 0.5;
+            scale = 1;
             temp_process_image = im2bw(temp_process_image,...
                 scale * graythresh(temp_process_image));
            

@@ -141,7 +141,7 @@ classdef OCW_Stats < handle
                     obj.data.(names{i}).POI_present = 1;
 
                     % calculate the mean POI (centroid)
-                    mean_POI = sum(centroids) ./ size(centroids,1);
+                    mean_POI = sum(centroids,1) ./ size(centroids,1);
                     obj.data.(names{i}).mean_POI = mean_POI;
                     
                     % assign the POA
