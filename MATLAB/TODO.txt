@@ -1,0 +1,4 @@
+TODO List
+
+* the center POA on the composite plot needs to be placed to match the actual targets, right now its just in the center. consider in Target class adding a property called nominal_POA with coordinates with respect to each rectangle
+
