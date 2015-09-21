@@ -2,3 +2,14 @@ TODO List
 
 * the center POA on the composite plot needs to be placed to match the actual targets, right now its just in the center. consider in Target class adding a property called nominal_POA with coordinates with respect to each rectangle
 
+* make bullet hole detection more robust, make a small inked region in a location
+not likely to be hit to get the mean gray level from, then convert to bw based on this
+
+* make the "Did not find all bullets seperately" warning message more descriptive
+    print which group and possibly other things
+
+* when printing out pdf files, include the original image filename in the pdf filename
+
+* on the plot that shows the groupings, try to plot the mean POI and the POA
+
+* develop a wrapper to call the different functions, like the testbeds but more formal

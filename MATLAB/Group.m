@@ -367,6 +367,12 @@ classdef Group < handle
             for i = 1:iter
                 bw_image = imerode(bw_image,smoothing_element);
             end
+            
+            % in rare cases, the final erode will leave stray unconnected
+            % regions, do another remove of them
+            smallest_bullet_dia = (0.17 * obj.Target.image_dpi) * 0.5;
+            smallest_area = floor(pi * (smallest_bullet_dia / 2)^2);
+            bw_image = bwareaopen(bw_image,smallest_area);
      
             % at this point all we should have is blobs that represent the
             % holes. Nominally we have specified how many bullets per POA,
