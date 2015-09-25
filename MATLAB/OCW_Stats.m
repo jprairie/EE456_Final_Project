@@ -294,20 +294,24 @@ classdef OCW_Stats < handle
            plot(x+xp,y+yp,'LineStyle','--','Color',obj.black);
            
            % plot each of the centroids
+           x = zeros(size(obj.group_names));
+           y = zeros(size(obj.group_names));
            for i = 1:length(obj.group_names)
                present = obj.data.(obj.group_names{i}).POI_present;
                if present
-                   x = pix2inch...
+                   x(i) = pix2inch...
                        (obj,obj.data.(obj.group_names{i}).POA_to_POI_RECT(1))...
                        + POA_x;
-                   y = POA_y - pix2inch...
+                   y(i) = POA_y - pix2inch...
                        (obj,obj.data.(obj.group_names{i}).POA_to_POI_RECT(2));
-                   plot(x,y,'O','Color',obj.orange,'MarkerFaceColor',obj.orange);
-                   text(x,y,num2str(i),'VerticalAlignment','bottom', ...
+                   %plot(x,y,'O','Color',obj.orange,'MarkerFaceColor',obj.orange);
+                   text(x(i),y(i),num2str(i),'VerticalAlignment','bottom', ...
                        'HorizontalAlignment','right');
                end
            end
-           
+           quiver(x,y,[diff(x); 0],[diff(y); 0],'-O','Color',obj.orange,...
+               'MarkerFaceColor',obj.orange,'AutoScale','off',...
+               'ShowArrowHead','on','MaxHeadSize',0.3);
            
         end
         
