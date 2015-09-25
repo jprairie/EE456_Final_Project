@@ -338,8 +338,15 @@ classdef OCW_Stats < handle
                     for i = 1:length(obj.group_names)
                        image = ...
                            obj.Group.info.(obj.group_names{i}).rgb_image;
+                       poa = obj.data.(obj.group_names{i}).POA;
+                       mean_poi = obj.data.(obj.group_names{i}).mean_POI;
                        subplot(3,2,i);
                        subimage(image);
+                       hold on;
+                       plot(poa(1),poa(2),'+','Color',obj.blue,...
+                           'MarkerFaceColor',obj.blue);
+                       plot(mean_poi(1),mean_poi(2),'*','Color',...
+                           obj.blue,'MarkerFaceColor',obj.blue);
                        title(sprintf('Group %d - %s',i,date));
                     end
                 otherwise
