@@ -311,7 +311,7 @@ classdef OCW_Stats < handle
            end
            quiver(x,y,[diff(x); 0],[diff(y); 0],'-O','Color',obj.orange,...
                'MarkerFaceColor',obj.orange,'AutoScale','off',...
-               'ShowArrowHead','on','MaxHeadSize',0.3);
+               'ShowArrowHead','on','MaxHeadSize',0.25);
            
         end
         
