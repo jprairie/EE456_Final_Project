@@ -243,17 +243,23 @@ classdef OCW_Stats < handle
         function h = create_composite_fig(obj)
             
            % get the nominal rectangular box regions for this target
-           % style type and set both to be the max of the two
+           % style type and set both to be the max of the two so we can use
+           % a square aspect ratio
            nom_bounds = [obj.Group.Target.approx_rect_W ...
                obj.Group.Target.approx_rect_H];
            nom_bounds = [max(nom_bounds) max(nom_bounds)];
            
            
-           % the center of the bounds will be the normalized POA, this is
-           % aleady in inches
-           center_POA = nom_bounds ./ 2;
+           % the POA will be placed at the mean POA value for all of the
+           % different groups
+           sum = [0 0];
+           for i = 1:length(obj.group_names)
+               sum = sum + obj.data.(obj.group_names{i}).POA;
+           end
+           
+           center_POA = (sum ./ i) ./ (obj.Group.Target.image_dpi);
            POA_x = center_POA(1);
-           POA_y = center_POA(2);
+           POA_y = nom_bounds(2) - center_POA(2); % reference from top
            
           
 
@@ -272,17 +278,20 @@ classdef OCW_Stats < handle
            title(title_str);
            xlabel('Target Width, Inches');
            ylabel('Target Height, Inches');
-           plot(center_POA(1),center_POA(2),'O','Color',obj.blue,...
+           plot(POA_x,POA_y,'O','Color',obj.blue,...
                'MarkerFaceColor',obj.blue);
+           % place POA text slightly above the point
+           text(POA_x,POA_y + (0.025 * POA_y),'POA','VerticalAlignment','bottom', ...
+                       'HorizontalAlignment','center');
            
            % plot a circle of 1 inch
            r = 0.5;
-           x = center_POA(1);
-           y = center_POA(2);
+           x = POA_x;
+           y = POA_y;
            ang=0:0.01:2*pi;
            xp=r*cos(ang);
            yp=r*sin(ang);
-           plot(x+xp,y+yp,'LineStyle',':','Color',obj.black);
+           plot(x+xp,y+yp,'LineStyle','--','Color',obj.black);
            
            % plot each of the centroids
            for i = 1:length(obj.group_names)
