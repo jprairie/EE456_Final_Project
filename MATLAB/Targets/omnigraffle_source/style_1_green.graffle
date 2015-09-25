@@ -52,6 +52,43 @@
 	<key>GraphicsList</key>
 	<array>
 		<dict>
+			<key>Bounds</key>
+			<string>{{72, 4.5}, {18, 9}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>GridCenter</key>
+			<string>YES</string>
+			<key>ID</key>
+			<integer>477</integer>
+			<key>Shape</key>
+			<string>Rectangle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0</string>
+						<key>g</key>
+						<string>1</string>
+						<key>r</key>
+						<string>0.498039</string>
+					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
 			<key>Class</key>
 			<string>Group</string>
 			<key>Graphics</key>
@@ -1996,7 +2033,7 @@ Date: _____________ Load: _______________________}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-09-18 02:10:15 +0000</string>
+	<string>2015-09-25 00:53:05 +0000</string>
 	<key>Modifier</key>
 	<string>Jason Prairie</string>
 	<key>NotesVisible</key>
@@ -2072,27 +2109,29 @@ Date: _____________ Load: _______________________}</string>
 		<key>ExpandedCanvases</key>
 		<array/>
 		<key>Frame</key>
-		<string>{{0, 40}, {2048, 1089}}</string>
+		<string>{{79, 193}, {2048, 1089}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
 		<integer>142</integer>
 		<key>RightSidebar</key>
 		<false/>
+		<key>ShowRuler</key>
+		<true/>
 		<key>Sidebar</key>
 		<true/>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{-223.45945946642567, 56.75675602530459}, {1042.1621487313071, 529.72972290284281}}</string>
+		<string>{{-21, 0}, {637.66666666666663, 311.66666666666669}}</string>
 		<key>Zoom</key>
-		<real>1.8500000238418579</real>
+		<real>3</real>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Canvas 1</string>
-				<real>1.8500000238418579</real>
-				<real>1.7999999523162842</real>
+				<real>3</real>
+				<real>2.9200000762939453</real>
 			</array>
 		</array>
 	</dict>
