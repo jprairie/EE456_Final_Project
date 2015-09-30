@@ -2,6 +2,7 @@ TODO List
 
 * make bullet hole detection more robust, make a small inked region in a location
 not likely to be hit to get the mean gray level from, then convert to bw based on this
+** gamma correction? see slide 124
 
 * make the "Did not find all bullets seperately" warning message more descriptive
     print which group and possibly other things
@@ -11,3 +12,5 @@ not likely to be hit to get the mean gray level from, then convert to bw based o
 * develop a wrapper to call the different functions, like the testbeds but more formal
 
 * add some more figures to show the resulting image during the various detection subroutines
+
+* consider "montage" plot command for the segmented out original images?

@@ -335,6 +335,7 @@ classdef Group < handle
             % first, take the passed in rgb image and convert to bw
             gry_image = rgb2gray(input_image);
             bw_image = im2bw(gry_image, 0.5 * graythresh(gry_image));
+
             
             % some edge detection
             bw_image = edge(bw_image,'canny');

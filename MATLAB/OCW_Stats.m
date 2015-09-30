@@ -343,6 +343,7 @@ classdef OCW_Stats < handle
                        subplot(3,2,i);
                        subimage(image);
                        hold on;
+                       axis off;
                        plot(poa(1),poa(2),'+','Color',obj.blue,...
                            'MarkerFaceColor',obj.blue);
                        plot(mean_poi(1),mean_poi(2),'*','Color',...
