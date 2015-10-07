@@ -334,12 +334,24 @@ classdef Group < handle
             
             % first, take the passed in rgb image and convert to bw
             gry_image = rgb2gray(input_image);
-            bw_image = im2bw(gry_image, 0.5 * graythresh(gry_image));
+            
+            % apply median filtering to remove noise
+            filter_size = [9 9];
+            gry_image = medfilt2(gry_image,filter_size);
+            
+            % blur it a bit to smooth out edges
+            filter = 1/25 * ones(5,5);
+            gry_image = imfilter(gry_image,filter);
+            
+            % convert to BW using a threshold value, anything below this
+            % value is black, above is white, the gray of the target should
+            % be around 127, maybe brighter, use a level of 100/255
+            thresh_value = 100/255;
+            bw_image = im2bw(gry_image, thresh_value);
 
             
             % some edge detection
-            bw_image = edge(bw_image,'canny');
-            
+            bw_image = edge(bw_image,'canny');            
             
             % dilate it, helps ensure that unenclosed bullet regions get
             % closed, adjust dil_scale for the percent of the bullet
