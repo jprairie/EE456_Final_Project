@@ -1,12 +1,8 @@
 TODO List
 
-* make the "Did not find all bullets seperately" warning message more descriptive
-    print which group and possibly other things
-
 * when printing out pdf files, include the original image filename in the pdf filename
 
 * develop a wrapper to call the different functions, like the testbeds but more formal
 
 * add some more figures to show the resulting image during the various detection subroutines
 
-* consider "montage" plot command for the segmented out original images?
