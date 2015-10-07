@@ -394,7 +394,7 @@ classdef Group < handle
             % this and return back the regionprops
             group_props = regionprops(bw_image);
             if (size(group_props,1) < num_bullets)
-                warning('Did not find all bullets seperately');
+                % could add a warning here, not needed now
             elseif (size(group_props,1) > num_bullets)
                 error('Found too many blob objects');
             end
