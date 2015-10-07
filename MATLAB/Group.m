@@ -396,7 +396,7 @@ classdef Group < handle
             if (size(group_props,1) < num_bullets)
                 % could add a warning here, not needed now
             elseif (size(group_props,1) > num_bullets)
-                error('Found too many blob objects');
+                error('Found too many bullet holes');
             end
         end
         
